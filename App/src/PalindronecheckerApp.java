@@ -1,19 +1,19 @@
 /**
  * ================================================================
- * MAIN CLASS - UseCase5PalindromeCheckerApp
+ * MAIN CLASS - UseCase6PalindromeCheckerApp
  * ================================================================
  *
- * Use Case 5: Stack-Based Palindrome Checker
+ * Use Case 6: Queue + Stack Based Palindrome Check
  *
  * Description:
- * This program uses a stack to reverse characters
- * and check whether a string is a palindrome.
+ * This program uses both Queue (FIFO) and Stack (LIFO)
+ * to check whether a string is a palindrome.
  *
  * @author Developer
  * @version 1.0
  */
 
-import java.util.Stack;
+import java.util.*;
 
 public class PalindronecheckerApp {
 
@@ -22,22 +22,29 @@ public class PalindronecheckerApp {
         // Original string
         String word = "madam";
 
-        // Create stack
+        // Create Queue and Stack
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
+        // Add characters to both Queue and Stack
         for (int i = 0; i < word.length(); i++) {
-            stack.push(word.charAt(i));
+            char ch = word.charAt(i);
+            queue.add(ch);   // enqueue
+            stack.push(ch);  // push
         }
 
-        // Pop and build reversed string
-        String reversed = "";
-        while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
+        // Compare dequeue vs pop
+        boolean isPalindrome = true;
+
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stack.pop()) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // Compare original and reversed
-        if (word.equals(reversed)) {
+        // Display result
+        if (isPalindrome) {
             System.out.println("The word \"" + word + "\" is a Palindrome.");
         } else {
             System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
