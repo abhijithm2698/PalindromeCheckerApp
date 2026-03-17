@@ -1,13 +1,13 @@
 /**
  * ================================================================
- * MAIN CLASS - UseCase6PalindromeCheckerApp
+ * MAIN CLASS - UseCase7PalindromeCheckerApp
  * ================================================================
  *
- * Use Case 6: Queue + Stack Based Palindrome Check
+ * Use Case 7: Deque-Based Optimized Palindrome Checker
  *
  * Description:
- * This program uses both Queue (FIFO) and Stack (LIFO)
- * to check whether a string is a palindrome.
+ * This program uses a Deque (Double Ended Queue)
+ * to compare characters from both ends efficiently.
  *
  * @author Developer
  * @version 1.0
@@ -22,22 +22,19 @@ public class PalindronecheckerApp {
         // Original string
         String word = "madam";
 
-        // Create Queue and Stack
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // Create Deque
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Add characters to both Queue and Stack
+        // Insert characters into deque
         for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            queue.add(ch);   // enqueue
-            stack.push(ch);  // push
+            deque.addLast(word.charAt(i));
         }
 
-        // Compare dequeue vs pop
+        // Compare front and rear
         boolean isPalindrome = true;
 
-        while (!queue.isEmpty()) {
-            if (queue.remove() != stack.pop()) {
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
                 isPalindrome = false;
                 break;
             }
