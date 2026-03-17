@@ -1,36 +1,46 @@
 /**
  * ================================================================
- * MAIN CLASS - UseCase10PalindromeCheckerApp
+ * MAIN CLASS - UseCase11PalindromeCheckerApp
  * ================================================================
  *
- * Use Case 10: Case-Insensitive & Space-Ignored Palindrome
+ * Use Case 11: Object-Oriented Palindrome Service
  *
  * Description:
- * This program checks whether a string is a palindrome
- * by ignoring spaces and case differences.
+ * This program encapsulates palindrome logic inside a class
+ * and exposes a method to check palindrome.
  *
  * @author Developer
  * @version 1.0
  */
 
+// Service class (Encapsulation)
+class PalindromeChecker {
+
+    // Method to check palindrome
+    public boolean checkPalindrome(String input) {
+
+        String cleaned = input.replaceAll("\\s+", "").toLowerCase();
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+
+        return cleaned.equals(reversed);
+    }
+}
+
+// Main class
 public class PalindronecheckerApp {
 
     public static void main(String[] args) {
 
-        // Original string
-        String input = "Madam In Eden";
+        String word = "Madam";
 
-        // Step 1: Normalize string (remove spaces & convert to lowercase)
-        String cleaned = input.replaceAll("\\s+", "").toLowerCase();
+        // Create object of service class
+        PalindromeChecker checker = new PalindromeChecker();
 
-        // Step 2: Reverse string
-        String reversed = new StringBuilder(cleaned).reverse().toString();
-
-        // Step 3: Compare
-        if (cleaned.equals(reversed)) {
-            System.out.println("\"" + input + "\" is a Palindrome (ignoring case & spaces).");
+        // Call method
+        if (checker.checkPalindrome(word)) {
+            System.out.println("\"" + word + "\" is a Palindrome.");
         } else {
-            System.out.println("\"" + input + "\" is NOT a Palindrome.");
+            System.out.println("\"" + word + "\" is NOT a Palindrome.");
         }
     }
 }
