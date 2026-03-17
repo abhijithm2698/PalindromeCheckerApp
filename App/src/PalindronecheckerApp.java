@@ -1,13 +1,13 @@
 /**
  * ================================================================
- * MAIN CLASS - UseCase12PalindromeCheckerApp
+ * MAIN CLASS - UseCase13PalindromeCheckerApp
  * ================================================================
  *
- * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ * Use Case 13: Performance Comparison
  *
  * Description:
- * This program uses the Strategy Design Pattern to dynamically
- * choose different palindrome checking algorithms.
+ * This program compares execution time of different
+ * palindrome checking approaches using System.nanoTime().
  *
  * @author Developer
  * @version 1.0
@@ -15,17 +15,18 @@
 
 import java.util.*;
 
-// Strategy Interface
-interface PalindromeStrategy {
-    boolean check(String input);
-}
+public class PalindronecheckerApp {
 
-// Stack Strategy
-class StackStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
+    // Method 1: String reverse
+    public static boolean checkUsingString(String word) {
+        String reversed = new StringBuilder(word).reverse().toString();
+        return word.equals(reversed);
+    }
+
+    // Method 2: Stack
+    public static boolean checkUsingStack(String word) {
         Stack<Character> stack = new Stack<>();
-
-        for (char ch : input.toCharArray()) {
+        for (char ch : word.toCharArray()) {
             stack.push(ch);
         }
 
@@ -34,16 +35,13 @@ class StackStrategy implements PalindromeStrategy {
             reversed += stack.pop();
         }
 
-        return input.equals(reversed);
+        return word.equals(reversed);
     }
-}
 
-// Deque Strategy
-class DequeStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
+    // Method 3: Deque
+    public static boolean checkUsingDeque(String word) {
         Deque<Character> deque = new ArrayDeque<>();
-
-        for (char ch : input.toCharArray()) {
+        for (char ch : word.toCharArray()) {
             deque.addLast(ch);
         }
 
@@ -52,43 +50,34 @@ class DequeStrategy implements PalindromeStrategy {
                 return false;
             }
         }
-
         return true;
     }
-}
-
-// Context Class
-class PalindromeContext {
-    private PalindromeStrategy strategy;
-
-    public void setStrategy(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean execute(String input) {
-        return strategy.check(input);
-    }
-}
-
-// Main Class
-public class PalindronecheckerApp {
 
     public static void main(String[] args) {
 
         String word = "madam";
 
-        PalindromeContext context = new PalindromeContext();
+        // String method timing
+        long start1 = System.nanoTime();
+        checkUsingString(word);
+        long end1 = System.nanoTime();
 
-        // Choose strategy dynamically
-        context.setStrategy(new StackStrategy());
-        // context.setStrategy(new DequeStrategy()); // try this also
+        // Stack method timing
+        long start2 = System.nanoTime();
+        checkUsingStack(word);
+        long end2 = System.nanoTime();
 
-        boolean result = context.execute(word);
+        // Deque method timing
+        long start3 = System.nanoTime();
+        checkUsingDeque(word);
+        long end3 = System.nanoTime();
 
-        if (result) {
-            System.out.println("The word \"" + word + "\" is a Palindrome.");
-        } else {
-            System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
-        }
+        // Display results
+        System.out.println("Performance Comparison (in nanoseconds):");
+        System.out.println("----------------------------------------");
+        System.out.println("String Reverse Method: " + (end1 - start1));
+        System.out.println("Stack Method: " + (end2 - start2));
+        System.out.println("Deque Method: " + (end3 - start3));
     }
 }
+
